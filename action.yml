@@ -1,0 +1,32 @@
+name: Verify Approver Not Requester
+description: A GitHub Action to verify that the approver is not the same as the requester
+author: Louisiana Office of Technology Services
+
+inputs:
+  requester:
+    description: 'The GitHub username of the requester'
+    required: true
+  approver:
+    description: 'The GitHub username of the approver'
+    required: true
+
+outputs:
+  result:
+    description: 'Result of the comparsion of the requester and approver (failure if parameters are emtpy, success otherwise).'
+    value: ${{ steps.action.outputs.result }}
+  is-approver-not-requester: 
+    description: 'Boolean indicating if the verification passed (true if approver is not requester, false otherwise)'
+    value: ${{ steps.action.outputs.is-approver-not-requester }}
+  error-message:
+    description: 'Error message if the verification fails'
+    value: ${{ steps.action.outputs.error-message }}
+
+runs:
+  using: composite
+  steps:
+    - name: Verify Approver Not Requester
+      id: action
+      run: |
+        source ${{ github.action_path }}/action.sh
+        verify_approver_not_requestor "${{ inputs.requester }}" "${{ inputs.approver }}"
+      shell: bash
