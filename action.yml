@@ -1,6 +1,6 @@
 name: Verify Approver Not Requester
 description: A GitHub Action to verify that the approver is not the same as the requester
-author: Louisiana Office of Technology Services
+author: Lee Lott
 
 inputs:
   requester:
