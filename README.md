@@ -40,7 +40,7 @@ This GitHub Action verifies that the approver is not the same as the requester b
        steps:
          - name: Verify Approver Not Requester
            id: verify
-           uses: lee-lott-actions/verify-approver-not-requester-action@v1.0.0
+           uses: lee-lott-actions/verify-approver-not-requester-action@v1
            with:
              requester: ${{ github.event.pull_request.user.login }}
              approver: ${{ github.event.pull_request.requested_reviewer.login }}
