@@ -11,15 +11,12 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v6
 
-      - name: Install System Dependencies
+      - name: Run Pester Unit Tests
+        shell: pwsh
         run: |
-          sudo apt-get update
-          sudo apt-get install -y bats
-
-      - name: Run Unit Tests
-        run: bats tests/unit-tests.bats
+          Invoke-Pester -Path ./tests/action.Tests.ps1
 
       - name: Run Integration Tests
         id: integration-tests
@@ -29,11 +26,11 @@ jobs:
           approver: 'john-doe'
           
       - name: Check Integration Test Result
+        shell: pwsh
         run: |
-          if [[ "${{ steps.integration-tests.outputs.result }}" == "success" ]]  && [[ "${{ steps.integration-tests.outputs.is-approver-not-requester}}" == "true" ]]; then
-            echo "Test passed: Integration test simulated successfully."
-          else
-            echo "Test failed: ${{ steps.create.outputs.error-message }}"
+          if (("${{ steps.integration-tests.outputs.result }}" -eq "success")-and ("${{ steps.integration-tests.outputs.is-approver-not-requester }}" -eq "true")) {
+            Write-Host "Test passed: Integration test simulated successfully."
+          } else {
+            Write-Host "Test failed: ${{ steps.integration-tests.outputs.error-message }}"
             exit 1
-          fi
-        shell: bash
+          }
