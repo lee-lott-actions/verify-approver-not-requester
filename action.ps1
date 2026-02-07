@@ -24,7 +24,7 @@ function Verify-ApproverNotRequestor {
 	  Write-Host "Verification failed: Approver '$Approver' cannot be the same as the requester '$Requester'."
     }
   } catch {
-	  $errorMsg = "Error: Failed to verify requester ($Requester) is not approver ($Approver). Exception: $($_.Exception.Message)"
+	  $errorMsg = "Error: Failed to verify requester '$Requester' is not approver '$Approver'. Exception: $($_.Exception.Message)"
       Add-Content -Path $env:GITHUB_OUTPUT -Value "result=failure"
       Add-Content -Path $env:GITHUB_OUTPUT -Value "is-approver-not-requester=false"    
 	  Add-Content -Path $env:GITHUB_OUTPUT -Value "error-message=$errorMsg"    

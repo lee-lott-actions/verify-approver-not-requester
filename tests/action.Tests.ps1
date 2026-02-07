@@ -72,7 +72,7 @@ Describe "Verify-ApproverNotRequestor" {
 		$output = Get-Content $env:GITHUB_OUTPUT
 		$output | Should -Contain "result=failure"
 		$output | Should -Contain "is-approver-not-requester=false"
-		$output | Where-Object { $_ -match "^error-message=Error: Failed to verify requester (user1) is not approver (user1)\. Exception:" } |
+		$output | Where-Object { $_ -match "^error-message=Error: Failed to verify requester 'user1' is not approver 'user1'\. Exception:" } |
 			Should -Not -BeNullOrEmpty
 	}	  
 }
