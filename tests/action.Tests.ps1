@@ -64,7 +64,8 @@ Describe "Verify-ApproverNotRequestor" {
 				throw "API Error" 
 			}
 		}
-
+		
+		Set-Content -Path $env:GITHUB_OUTPUT -Value ""
 		Verify-ApproverNotRequestor -Requester "user1" -Approver "user1"
 
 		$output = Get-Content $env:GITHUB_OUTPUT
