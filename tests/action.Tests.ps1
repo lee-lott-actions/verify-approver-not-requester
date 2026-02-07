@@ -57,15 +57,16 @@ Describe "Verify-ApproverNotRequestor" {
 	}
   
 	It "writes result=failure and error-message on exception" {
-		$script:callCount = 0
-		Mock Add-Content {
-			$script:callCount++
-			if($script:callCount -eq 1) {
-				throw "API Error" 
+		Mock Write-Host {
+			param([Parameter(Position=0)][object]$Object)
+
+			# Throw only for the Write-Host call inside the try block,
+			# not the initial "Verifying..." message (which is outside try/catch).
+			if ($Object -like "Verification *") {
+				throw "API Error"
 			}
 		}
 		
-		Set-Content -Path $env:GITHUB_OUTPUT -Value ""
 		Verify-ApproverNotRequestor -Requester "user1" -Approver "user1"
 
 		$output = Get-Content $env:GITHUB_OUTPUT
