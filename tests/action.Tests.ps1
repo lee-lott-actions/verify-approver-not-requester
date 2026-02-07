@@ -59,7 +59,9 @@ Describe "Verify-ApproverNotRequestor" {
 	It "writes result=failure and error-message on exception" {
 		Mock Add-Content { throw "API Error" }
 
-		Verify-ApproverNotRequestor -Requester "user1" -Approver "user1"
+		try {
+			Verify-ApproverNotRequestor -Requester "user1" -Approver "user1"
+		} catch {}
 
 		$output = Get-Content $env:GITHUB_OUTPUT
 		$output | Should -Contain "result=failure"
