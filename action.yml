@@ -29,4 +29,6 @@ runs:
       shell: pwsh
       run: |
         . "${{ github.action_path }}/action.ps1"
-        Verify-ApproverNotRequestor "${{ inputs.requester }}" "${{ inputs.approver }}"
+        Verify-ApproverNotRequestor `
+          -Requester "${{ inputs.requester }}" `
+          -Approver "${{ inputs.approver }}"
